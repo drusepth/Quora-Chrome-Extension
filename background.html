@@ -1,28 +1,13 @@
 <html>
 <head>
-<script>
-	// Set up ajax 
-	// (from http://www.anyexample.com/webdev/ajax/ajax_example__get_page_title.xml)
-	var ajax_transport = false;
-    try 
-	{
-        ajax_transport = new ActiveXObject("Msxml2.XMLHTTP");
-    } 
-	catch (e) 
-	{
-        try 
-		{
-            ajax_transport = new ActiveXObject("Microsoft.XMLHTTP");
-        } 
-		catch (E) 
-		{
-            if (typeof XMLHttpRequest != 'undefined') 
-			{
-                ajax_transport = new XMLHttpRequest();
-            }
-        }
-    }
+<script type="text/javascript">
+	// Config stuff -- perhaps allow users to change these later
+	var delay_seconds = 60; // How many seconds to wait between checking notifications
+
+	// This is Chrome so we know XMLHttpRequest() works. None of that bullshit try/catch init
+	var ajax_transport = new XMLHttpRequest();
 	
+	// Start
 	update();
 	
 	function update()
@@ -32,9 +17,8 @@
         ajax_transport.onreadystatechange = process;
         ajax_transport.send(null)
 		
-		setTimeout(update, 60000);
-		
-		return 0;
+		// Do it again later
+		setTimeout(update, 1000 * delay_seconds);
 	}
 	
 	function process()
@@ -55,6 +39,7 @@
         }
 		else
 		{
+			// Set new badge
 			chrome.browserAction.setBadgeText({text: n[1]});
 		}
 	}
