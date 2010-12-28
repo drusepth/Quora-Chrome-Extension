@@ -1,0 +1,63 @@
+<html>
+<head>
+<script>
+	// Set up ajax 
+	// (from http://www.anyexample.com/webdev/ajax/ajax_example__get_page_title.xml)
+	var ajax_transport = false;
+    try 
+	{
+        ajax_transport = new ActiveXObject("Msxml2.XMLHTTP");
+    } 
+	catch (e) 
+	{
+        try 
+		{
+            ajax_transport = new ActiveXObject("Microsoft.XMLHTTP");
+        } 
+		catch (E) 
+		{
+            if (typeof XMLHttpRequest != 'undefined') 
+			{
+                ajax_transport = new XMLHttpRequest();
+            }
+        }
+    }
+	
+	update();
+	
+	function update()
+	{
+		// sending request
+        ajax_transport.open("GET", "http://www.quora.com", true);
+        ajax_transport.onreadystatechange = process;
+        ajax_transport.send(null)
+		
+		setTimeout(update, 60000);
+		
+		return 0;
+	}
+	
+	function process()
+	{
+		if (ajax_transport.readyState != 4)
+		{
+            return;
+		}
+		
+		// scrrraaape
+		var re_n = new RegExp("<strong>Home</strong><span id=\".+\"><strong class=\"count\">(.+)</strong></span>", "i");
+		var content = ajax_transport.responseText;
+        var n = re_n.exec(content);
+		if (n == null)  // regex didn't match
+        {
+            // Remove extension badge
+			chrome.browserAction.setBadgeText({text: ""});
+        }
+		else
+		{
+			chrome.browserAction.setBadgeText({text: n[1]});
+		}
+	}
+</script>
+</head>
+</html>

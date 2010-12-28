@@ -1,0 +1,82 @@
+<style>
+*
+{
+	padding: 0px;
+	margin: 0px;
+}
+body 
+{
+	width:357px;
+	overflow-x:hidden;
+	color: #333333;
+	font-family: "Helvetica Neue",Helvetica,Arial,default;
+	font-size: 80%;
+}
+#header
+{
+	height: 35px;
+	background: #505759;
+	padding-top: 9px;
+	padding-left: 5px;
+}
+#logo
+{
+	background: url(http://d1vgw4v7ja2ido.cloudfront.net/-65405a6c1148fc9c.gif) no-repeat center top;
+	text-align: center;
+	text-indent: -10000px;
+	font-size: 10px;
+	height: 35px;
+	overflow: hidden;
+	width: 60px;
+	display: block;
+	float: left;
+}
+.search_form 
+{
+	float: left;
+	background: #000000;
+	height: 30px;
+	padding-left: 4px;
+	padding-top: 4px;
+}	
+#question_box
+{
+	height: 26px;
+	width: 230px;
+	margin-right: 4px;
+}
+#search_button
+{
+	float: right;
+	background: #000000;
+	border: 0px;
+	color: #ffffff;
+	padding-right: 5px;
+	font-weight: bold;
+	margin-top: 5px;
+}
+#search_button:hover
+{
+	text-decoration: underline;
+}
+</style>
+
+<script>
+	function search()
+	{
+		var q = document.getElementById("question_box").value;
+		chrome.tabs.create({url: "http://www.quora.com/search?q=" + q + "&context_type=&context_id="});
+	}
+</script>
+
+<div id="header">
+	<a id="logo" href="http://www.quora.com">Quora</a>
+	<form class="search_form" action="#" onsubmit="search(); return false" method="get" name="search_form">
+		<input id="search_button" type="submit" value="Search" />
+		<input id="question_box" type="text" value="" maxlength="150" name="q" />
+		<input type="hidden" name="context_type" />
+		<input type="hidden" name="context_id" />
+		<input type="hidden" name="source" value="chrome-extension" />
+	</form>
+	
+</div>
