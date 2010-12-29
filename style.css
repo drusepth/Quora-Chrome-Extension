@@ -3,6 +3,10 @@
 	margin: 0px;
 	padding: 0px;
 }
+a
+{
+	text-decoration: none;
+}
 body 
 {
 	color: #333333;
@@ -68,4 +72,35 @@ body
 #search_button:hover
 {
 	text-decoration: underline;
+}
+#notifications
+{
+	background-color: #DFEAF4;
+	border: 3px solid #BED4E8;
+	
+	margin: 6px;
+	padding: 9px;
+}
+#notifications h3
+{
+	padding-bottom: 3px;
+	margin-bottom: 3px;
+}
+.expand
+{
+	color: #333333;
+}
+.hidden
+{
+	display: none;
+}
+ul, ul li
+{
+	list-style: none;
+}
+.aggregated_item
+{
+	border-top: 1px solid #BED4E8;
+	padding-top: 3px;
+	margin-top: 3px;
 }

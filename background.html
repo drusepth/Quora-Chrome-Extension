@@ -10,6 +10,14 @@
 	// Start
 	update();
 	
+	// Event listeners
+	// *clicks on extension icon*
+	chrome.browserAction.onClicked.addListener(function(tab) 
+	{
+		alert("Sup");
+	});
+	
+	// Functions
 	function update()
 	{
 		// sending request

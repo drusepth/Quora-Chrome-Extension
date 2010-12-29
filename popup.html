@@ -1,15 +1,84 @@
 <link href="style.css" rel="stylesheet" type="text/css" />
 
 <script type="text/javascript">
+	var ajax_transport = ajax_init();
+	update_notifications();
+
 	function search()
 	{
 		var q = document.getElementById("question_box").value;
 		chrome.tabs.create({url: "http://www.quora.com/search?q=" + q + "&context_type=&context_id="});
 	}
+	
+	function ajax_init()
+	{
+		// Chrome so we knew XMLHttpRequest works -- joy!
+		return new XMLHttpRequest();
+	}
+	
+	function update_notifications()
+	{
+		get_notifications();
+		setTimeout(update_notifications, 60000);
+	}
+	
+	function get_notifications()
+	{
+		// sending request
+        ajax_transport.open("GET", "http://www.quora.com", true);
+        ajax_transport.onreadystatechange = process_notifications;
+        ajax_transport.send(null)
+	}
+	
+	function process_notifications()
+	{
+		if (ajax_transport.readyState != 4)
+		{
+            return;
+		}
+		
+		// scrrraaape
+		var re_n = new RegExp("<div class=\"row unseen\"><div class=\"aggregated_item\"><div>.+ <a class=\"timestamp\" href=\"/log/revision/[^\"]+\">[^<]+</a></div></div>", "gmi");
+		var re_timestamp = new RegExp("<a class=\"timestamp\" href=\"/log/revision/[^\"]+\">[^<]+</a>", "gmi");
+		var re_quora_rw  = new RegExp("href=\"/", "gmi");
+		var re_target_rw = new RegExp("<a ", "gmi");
+		
+		var content = ajax_transport.responseText;
+        var notis;
+		
+		if (re_n.test(content))
+		{
+			// Match & Modify
+			notis = String(content.match(re_n));
+			// Remove timestamps
+			notis = notis.replace(re_timestamp, "");
+			// Rewrite URLs to point at Quora
+			notis = notis.replace(re_quora_rw, "href=\"http://www.quora.com/");
+			// Make them open in new windows when clicked
+			notis = notis.replace(re_target_rw, "<a target=\"_quora_\" ");
+			
+			// Create element 
+			var notif = document.createElement('li');
+			notif.setAttribute('id', 'noti');
+			
+			// Add element
+			document.getElementById('n_list').appendChild(notif);
+			document.getElementById('noti').innerHTML = notis;
+		}
+		else
+		{
+			// Hide empty notification box
+			document.getElementById('notifications').style.display = "none";
+			
+			// Perhaps show inbox or feed here later?
+		}
+		
+	}
+	
 </script>
 
 <div id="header">
-	<a id="logo" href="http://www.quora.com">Quora</a>
+	<a id="logo" href="http://www.quora.com" target="_quora">Quora</a>
 	<form class="search_form" action="#" onsubmit="search(); return false" method="get" name="search_form">
 		<input id="search_button" type="submit" value="Search" />
 		<input id="question_box" type="text" value="" maxlength="150" name="q" />
@@ -17,5 +86,23 @@
 		<input type="hidden" name="context_id" />
 		<input type="hidden" name="source" value="chrome-extension" />
 	</form>
-	
 </div>
+
+<div id="notifications">
+	<h3 id="n_title">New Notifications</h3>
+	
+	<ul id="n_list">
+	
+	</ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
