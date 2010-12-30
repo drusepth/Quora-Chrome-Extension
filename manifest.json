@@ -7,6 +7,10 @@
 		"default_icon": "favicon.ico",
 		"popup": "popup.html"
 	},
+	"icons": { 
+		"16": "favicon.ico",
+		"48": "48.png",
+	},
 	"permissions": [
 		"tabs",
 		"http://www.quora.com/"

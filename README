@@ -4,7 +4,8 @@ New features:
  
 Current problems:
  - Regex for finding notifications looks for an <a> timestamp, 
-   while some notifications (comments) use <span> instead
+   while some notifications (comments) use <span> instead.
+   Also some (x items on y) don't have timestamps at all.
 
 Todo:
  - Display more than just 3 notifications on the homepage.
