@@ -1,0 +1,56 @@
+<html>
+<head>
+<script type="text/javascript">
+	// Config stuff -- perhaps allow users to change these later
+	var delay_seconds = 60; // How many seconds to wait between checking notifications
+
+	// This is Chrome so we know XMLHttpRequest() works. None of that bullshit try/catch init
+	var ajax_transport = new XMLHttpRequest();
+	
+	// Start
+	update();
+	
+	// Event listeners
+	// *clicks on extension icon*
+	chrome.browserAction.onClicked.addListener(function(tab) 
+	{
+		alert("Sup");
+	});
+	
+	// Functions
+	function update()
+	{
+		// sending request
+        ajax_transport.open("GET", "http://www.quora.com", true);
+        ajax_transport.onreadystatechange = process;
+        ajax_transport.send(null)
+		
+		// Do it again later
+		setTimeout(update, 1000 * delay_seconds);
+	}
+	
+	function process()
+	{
+		if (ajax_transport.readyState != 4)
+		{
+            return;
+		}
+		
+		// scrrraaape
+		var re_n = new RegExp("<strong>Home</strong><span id=\".+\"><strong class=\"count\">(.+)</strong></span>", "i");
+		var content = ajax_transport.responseText;
+        var n = re_n.exec(content);
+		if (n == null)  // regex didn't match
+        {
+            // Remove extension badge
+			chrome.browserAction.setBadgeText({text: ""});
+        }
+		else
+		{
+			// Set new badge
+			chrome.browserAction.setBadgeText({text: n[1]});
+		}
+	}
+</script>
+</head>
+</html>
