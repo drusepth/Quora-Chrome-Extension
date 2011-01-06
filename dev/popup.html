@@ -88,6 +88,10 @@
 				+ '<a href="http://www.quora.com/inbox" target="_quora">Click here to '
 				+ 'visit your inbox.';
 		}
+		else
+		{
+			document.getElementByID('mail').style.display = 'none';
+		}
 		
 		// Update badge count
 		var badgeText = (n_count > 0) ? String(n_count) : "";
