@@ -1,19 +1,15 @@
+<html>
+<head>
 <link href="style.css" rel="stylesheet" type="text/css" />
 
 <script type="text/javascript">
-	var ajax_transport = ajax_init();
+	var ajax_transport = new XMLHttpRequest();
 	update_notifications();
 
 	function search()
 	{
 		var q = document.getElementById("question_box").value;
 		chrome.tabs.create({url: "http://www.quora.com/search?q=" + q + "&context_type=&context_id="});
-	}
-	
-	function ajax_init()
-	{
-		// Chrome so we knew XMLHttpRequest works -- joy!
-		return new XMLHttpRequest();
 	}
 	
 	function update_notifications()
@@ -25,9 +21,9 @@
 	function get_notifications()
 	{
 		// sending request
-        ajax_transport.open("GET", "http://www.quora.com", true);
+        ajax_transport.open("GET", "http://api.quora.com/api/logged_in_user?fields=notifs", true);
         ajax_transport.onreadystatechange = process_notifications;
-        ajax_transport.send(null)
+        ajax_transport.send(null); // Causes the error
 	}
 	
 	function process_notifications()
@@ -37,45 +33,51 @@
             return;
 		}
 		
-		// scrrraaape
-		var re_n = new RegExp("<div class=\"row unseen\"><div class=\"aggregated_item\"><div>.+ <a class=\"timestamp\" href=\"/log/revision/[^\"]+\">[^<]+</a></div></div>", "gmi");
-		var re_timestamp = new RegExp("<a class=\"timestamp\" href=\"/log/revision/[^\"]+\">[^<]+</a>", "gmi");
-		var re_quora_rw  = new RegExp("href=\"/", "gmi");
-		var re_target_rw = new RegExp("<a ", "gmi");
+		// while(1);{"name": "Andrew Brown", "notifs": {"unseen_count": 1, "unseen": 
+		// ["<a href=\"http://www.quora.com/Liz-Pullen\">Liz Pullen</a> also commented on 
+		// <a href=\"http://www.quora.com/What-is-your-definition-of-a-lady/talk?__snids__=7146833#comment37899\">
+		// What is your definition of a lady?</a>"], "unseen_aggregated_count": 1}}
 		
-		var content = ajax_transport.responseText;
-        var notis;
+		// Strip while(1);
+		var response = ajax_transport.responseText;
+		response = response.substring("while(1);".length);
+		// Parse json
+		var json = JSON.parse(response);
 		
-		if (re_n.test(content))
+		var name = json.name;
+		var n_count = json.notifs.unseen_count;
+		var t_notifs = json.notifs.unseen_aggregated_count;
+		var notifs = json.notifs.unseen;
+		
+		if (name == "undefined" || n_count == "undefined" || t_notifs == "undefined" || notifs == "undefined")
 		{
-			// Match & Modify
-			notis = String(content.match(re_n));
-			// Remove timestamps
-			notis = notis.replace(re_timestamp, "");
-			// Rewrite URLs to point at Quora
-			notis = notis.replace(re_quora_rw, "href=\"http://www.quora.com/");
-			// Make them open in new windows when clicked
-			notis = notis.replace(re_target_rw, "<a target=\"_quora_\" ");
-			
-			// Create element 
-			var notif = document.createElement('li');
-			notif.setAttribute('id', 'noti');
-			
-			// Add element
-			document.getElementById('n_list').appendChild(notif);
-			document.getElementById('noti').innerHTML = notis;
-		}
-		else
-		{
-			// Hide empty notification box
-			document.getElementById('notifications').style.display = "none";
-			
-			// Perhaps show inbox or feed here later?
+			// Error reading from api
+			return;
 		}
 		
+		if (n_count > 0)
+		{
+			var notif_container = document.getElementById('n_list');
+		
+			// Add all notifications to popup
+			for (var i = 0; i < (t_notifs > 5 ? 5 : t_notifs); i++)
+			{
+				var n = document.createElement('li');
+				n.setAttribute('id', 'notif_' + i);
+				n.setAttribute('class', 'notification');
+				
+				notif_container.appendChild(n);
+				document.getElementById('notif_' + i).innerHTML = notifs[i];
+			}
+		}
+		
+		// Update badge count
+		var badgeText = (n_count > 0) ? String(n_count) : "";
+		chrome.browserAction.setBadgeText({text: badgeText});
 	}
-	
 </script>
+</head>
+<body>
 
 <div id="header">
 	<a id="logo" href="http://www.quora.com" target="_quora">Quora</a>
@@ -95,3 +97,5 @@
 	
 	</ul>
 </div>
+</body>
+</html>

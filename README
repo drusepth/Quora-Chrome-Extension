@@ -1,14 +1,14 @@
-New features:
+Published to Chrome Web Store!
+  https://chrome.google.com/webstore/detail/gnnbgffjfpnecggjijijanegfdhdaodn
+
+Features:
  - Open Quora in a new tab by clicking the logo
- - Top 3 notifications are shown in the popup
+ - Top 5 notifications are shown in the popup
+ - Uses Quora API to ensure super speedy response times
  
 Current problems:
- - Regex for finding notifications looks for an <a> timestamp, 
-   while some notifications (comments) use <span> instead.
-   Also some (x items on y) don't have timestamps at all.
+ - AFAIK none
 
 Todo:
- - Display more than just 3 notifications on the homepage.
-   Apparently viewing the mobile notifications page won't mark
-   everything as read (and probably loads faster!)
-   
+ - Allow users to mark notifications read from extension.
+ - Check inbox for new messages too

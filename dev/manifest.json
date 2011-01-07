@@ -1,19 +1,22 @@
 {
 	"name": "Quora",
-	"version": "1.0",
+	"version": "1.1",
 	"description": "See your notifications on Quora",
 	"background_page": "background.html",
-	"browser_action": {
+	"browser_action": 
+	{
 		"default_icon": "favicon.ico",
 		"popup": "popup.html"
 	},
-	"icons": { 
+	"icons": 
+	{ 
 		"16": "favicon.ico",
 		"48": "48.png",
 		"128": "128.png"
 	},
-	"permissions": [
+	"permissions": 
+	[
 		"tabs",
-		"http://www.quora.com/"
+		"http://api.quora.com/"
 	]
 }
