@@ -14,9 +14,9 @@
 	function update()
 	{
 		// sending request
-        ajax_transport.open("GET", "http://api.quora.com/api/logged_in_user?fields=notifs", true);
-        ajax_transport.onreadystatechange = process;
-        ajax_transport.send(null)
+		ajax_transport.open("GET", "http://api.quora.com/api/logged_in_user?fields=notifs", true);
+		ajax_transport.onreadystatechange = process;
+		ajax_transport.send(null)
 		
 		// Do it again later
 		setTimeout(update, 1000 * delay_seconds);
@@ -26,7 +26,7 @@
 	{
 		if (ajax_transport.readyState != 4)
 		{
-            return;
+			return;
 		}
 		
 		// Strip while(1);

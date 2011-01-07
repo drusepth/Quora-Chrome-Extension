@@ -21,16 +21,16 @@
 	function get_notifications()
 	{
 		// sending request
-        ajax_transport.open("GET", "http://api.quora.com/api/logged_in_user?fields=notifs", true);
-        ajax_transport.onreadystatechange = process_notifications;
-        ajax_transport.send(null); // Causes the error
+		ajax_transport.open("GET", "http://api.quora.com/api/logged_in_user?fields=notifs", true);
+		ajax_transport.onreadystatechange = process_notifications;
+		ajax_transport.send(null); // Causes the error
 	}
 	
 	function process_notifications()
 	{
 		if (ajax_transport.readyState != 4)
 		{
-            return;
+			return;
 		}
 		
 		// while(1);{"name": "Andrew Brown", "notifs": {"unseen_count": 1, "unseen": 
