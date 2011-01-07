@@ -14,7 +14,7 @@
 	function update()
 	{
 		// sending request
-		ajax_transport.open("GET", "http://api.quora.com/api/logged_in_user?fields=notifs", true);
+		ajax_transport.open("GET", "http://api.quora.com/api/logged_in_user?fields=notifs,inbox", true);
 		ajax_transport.onreadystatechange = process;
 		ajax_transport.send(null)
 		
@@ -35,9 +35,16 @@
 		// Parse json
 		var json = JSON.parse(response);
 		var n_count = json.notifs.unseen_count;
+		var m_count = json.inbox.unread_count;
 		
 		// Update badge count
 		var badgeText = (n_count > 0) ? String(n_count) : "";
+		
+		if (m_count > 0 && String(n_count).length < 3)
+		{
+			badgeText += ("/" + m_count);
+		}
+		
 		chrome.browserAction.setBadgeText({text: badgeText});
 	}
 </script>
