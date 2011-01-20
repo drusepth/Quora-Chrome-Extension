@@ -33,11 +33,6 @@
 			return;
 		}
 		
-		// while(1);{"name": "Andrew Brown", "notifs": {"unseen_count": 1, "unseen": 
-		// ["<a href=\"http://www.quora.com/Liz-Pullen\">Liz Pullen</a> also commented on 
-		// <a href=\"http://www.quora.com/What-is-your-definition-of-a-lady/talk?__snids__=7146833#comment37899\">
-		// What is your definition of a lady?</a>"], "unseen_aggregated_count": 1}}
-		
 		// Strip while(1);
 		var response = ajax_transport.responseText;
 		response = response.substring("while(1);".length);
@@ -69,6 +64,8 @@
 				n.setAttribute('class', 'notification');
 				
 				notif_container.appendChild(n);
+				
+				notifs[i] = notifs[i].replace(/<a href=/gi, "<a target=\"_quora\" href=");
 				document.getElementById('notif_' + i).innerHTML = notifs[i];
 			}
 		}
