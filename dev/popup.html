@@ -65,7 +65,11 @@
 				
 				notif_container.appendChild(n);
 				
+				// Reformat as needed
 				notifs[i] = notifs[i].replace(/<a href=/gi, "<a target=\"_quora\" href=");
+				notifs[i] = notifs[i].replace(/<a target="_quora" href="#">.*?<\/a>/gi, ""); 
+				notifs[i] = notifs[i].replace(/\. They need topics to get started: /, "");
+				
 				document.getElementById('notif_' + i).innerHTML = notifs[i];
 			}
 		}
