@@ -1,13 +1,13 @@
 <html>
 <head>
 <script type="text/javascript">
-	// Config stuff -- perhaps allow users to change these later
-	var delay_seconds = 60; // How many seconds to wait between checking notifications
+	// Configuration
+	var delay_seconds = 60; // Seconds between requesting updates from Quora
 
-	// This is Chrome so we know XMLHttpRequest() works. None of that bullshit try/catch init
+	// AJAX Object
 	var ajax_transport = new XMLHttpRequest();
 	
-	// Start
+	// Start asynch updating
 	update();
 	
 	// Functions
@@ -32,6 +32,7 @@
 		// Strip while(1);
 		var response = ajax_transport.responseText;
 		response = response.substring("while(1);".length);
+		
 		// Parse json
 		var json = JSON.parse(response);
 		var n_count = json.notifs.unseen_count;
@@ -39,12 +40,10 @@
 		
 		// Update badge count
 		var badgeText = (n_count > 0) ? String(n_count) : "";
-		
 		if (m_count > 0 && String(n_count).length < 3)
 		{
 			badgeText += ("/" + m_count);
 		}
-		
 		chrome.browserAction.setBadgeText({text: badgeText});
 	}
 </script>

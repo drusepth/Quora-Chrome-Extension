@@ -1,6 +1,6 @@
 {
 	"name": "Quora",
-	"version": "1.2.3",
+	"version": "1.2.5",
 	"description": "See your notifications on Quora",
 	"background_page": "background.html",
 	"browser_action": 
@@ -16,7 +16,6 @@
 	},
 	"permissions": 
 	[
-		"tabs",
 		"http://api.quora.com/"
 	]
 }

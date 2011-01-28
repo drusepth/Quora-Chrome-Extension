@@ -1,14 +1,14 @@
 Published to Chrome Web Store!
   https://chrome.google.com/webstore/detail/gnnbgffjfpnecggjijijanegfdhdaodn
 
-Features:
- - Quickly open Quora in a new tab by clicking the logo
- - Top 5 notifications are shown in the popup
- - Alerts you of new private messages
- - Uses Quora API to ensure super speedy response times
+Recent changes:
+ - Removed "tabs" permission requirement. Wasn't needed to create a tab, actually.
+ - Clarifications in code commenting
+ - Removed rogue ? in css url so css should cache again
  
 Current problems:
  - AFAIK none
 
 Todo:
  - Allow users to mark notifications read from extension
+ - Group notifications together if they're from the same question

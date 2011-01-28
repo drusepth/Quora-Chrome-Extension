@@ -1,6 +1,6 @@
 <html>
 <head>
-<link href="style.css?" rel="stylesheet" type="text/css" />
+<link href="style.css" rel="stylesheet" type="text/css" />
 
 <script type="text/javascript">
 	var ajax_transport = new XMLHttpRequest();
@@ -57,7 +57,7 @@
 			var notif_container = document.getElementById('n_list');
 		
 			// Add all notifications to popup
-			for (var i = 0; i < (t_notifs > 5 ? 5 : t_notifs); i++)
+			for (var i = 0; i < (n_count > 5 ? 5 : n_count); i++)
 			{
 				var n = document.createElement('li');
 				n.setAttribute('id', 'notif_' + i);
