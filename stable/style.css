@@ -73,7 +73,13 @@ body
 {
 	text-decoration: underline;
 }
-#notifications
+.notification
+{
+	border-top: 1px solid #C2D7EA;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+#notifications, #mail
 {
 	background-color: #DFEAF4;
 	border: 3px solid #BED4E8;
@@ -97,10 +103,4 @@ body
 ul, ul li
 {
 	list-style: none;
-}
-.aggregated_item
-{
-	border-top: 1px solid #BED4E8;
-	padding-top: 3px;
-	margin-top: 3px;
 }
