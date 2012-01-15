@@ -1,6 +1,6 @@
 {
 	"name": "Quora",
-	"version": "1.2.5",
+	"version": "1.2.6",
 	"description": "See your notifications on Quora",
 	"background_page": "background.html",
 	"browser_action": 
