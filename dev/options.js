@@ -29,6 +29,8 @@ function restore_options() {
   }
 }
 
-document.addEventListener('DOMContentReady', restore_options);
-document.querySelector('#save').addEventListener('click', save_options);
-
+document.addEventListener('DOMContentLoaded', restore_options);
+document.addEventListener('DOMContentLoaded', function () {
+  // Wait until page has loaded to add events to DOM nodes
+  document.querySelector('#save').addEventListener('click', save_options);
+});
