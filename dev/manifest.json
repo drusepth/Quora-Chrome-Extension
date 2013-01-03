@@ -5,12 +5,12 @@
 	"description": "See your notifications on Quora",
 	"background": 
 	{
-		"page": "background.html",
-	}
+		"page": "background.html"
+	},
 	"browser_action": 
 	{
 		"default_icon": "favicon.ico",
-		"popup": "popup.html"
+		"default_popup": "popup.html"
 	},
 	"icons": 
 	{ 
